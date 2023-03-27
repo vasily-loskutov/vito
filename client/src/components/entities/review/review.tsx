@@ -7,7 +7,7 @@ import { useAppSelector } from "@hooks";
 import { useDeleteReviewMutation, useUpdateReviewMutation } from "@redux"
 type PropTypes = {
   data: IReview,
-  isEditReview: boolean,
+  isEditReview?: boolean,
   position?: "horizontal" | "vertical"
 }
 const Review: FC<PropTypes> = ({ data, isEditReview, position }) => {

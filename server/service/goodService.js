@@ -1,7 +1,9 @@
 const Good = require("../models/good");
 const PurchasedGood = require("../models/purchasedGood");
+
 class GoodService {
   async getGoods() {
+
     const goods = await Good.findAll();
     return goods;
   }
@@ -18,6 +20,7 @@ class GoodService {
     return good;
   }
   async createGood(payload) {
+
     const good = await Good.create({
       name: payload.name,
       description: payload.description,

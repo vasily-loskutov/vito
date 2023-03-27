@@ -3,6 +3,7 @@ const goodService = require("../service/goodService");
 class GoodContoller {
   async getGoods(req, res, next) {
     try {
+
       const goods = await goodService.getGoods();
       return res.send(goods);
     } catch (e) {

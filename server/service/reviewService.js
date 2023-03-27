@@ -1,4 +1,6 @@
 const Review = require("../models/review");
+const Good = require("../models/good")
+const average = require("../utils/average.js")
 class ReviewService {
   async getReview(id) {
     const review = await Review.findAll({ where: { goodId: id } });
@@ -9,6 +11,9 @@ class ReviewService {
     return review;
   }
   async createReview(payload) {
+    const AllRate = await Review.findAll({ attributes: ['rate'], where: { goodId: payload.goodId }, raw: true });
+    const newRate = average(AllRate)
+    await Good.update({ rate: newRate }, { where: { id: payload.goodId } })
     const review = await Review.create({
       comment: payload.comment,
       minus: payload.minus,

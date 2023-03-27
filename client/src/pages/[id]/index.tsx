@@ -49,7 +49,7 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
     <div>
 
       <Title>Комментарии:</Title>
-      {isAuth && isВought === -1 && < CreateReview />}
+      {isAuth && < CreateReview />}
       <div className='relative'>
 
         <Carousel
@@ -69,8 +69,9 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
 export default FullGoodPage;
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
   const { data } = await store.dispatch(goodsApi.endpoints.getGood.initiate(context.params.id[0]))
-  console.log(context.params.id[0])
+  console.log(data)
+
   const { data: reviews } = await store.dispatch(reviewApi.endpoints.getReview.initiate(context.params.id[0]))
-  console.log(reviews)
+
   return { props: { data, reviews } }
 })
