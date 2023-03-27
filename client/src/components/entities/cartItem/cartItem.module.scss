@@ -1,0 +1,9 @@
+.cartItemContainer {
+  @apply flex gap-x-10 items-center;
+}
+.cartItemInfo {
+  @apply flex flex-col gap-y-3;
+}
+.cartItemText {
+  @apply font-bold text-xl;
+}

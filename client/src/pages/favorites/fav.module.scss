@@ -1,0 +1,9 @@
+.favContainer {
+  @apply flex flex-col;
+}
+.favItemsContainer{
+    @apply w-full flex flex-col gap-y-8
+}
+.favSectionTitle{
+   @apply font-bold text-5xl mb-6
+}

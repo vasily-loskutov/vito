@@ -1,0 +1,11 @@
+frontend:
+    react
+    ts
+    redux[rtk-query]
+    next
+    ant-design
+    tailwind
+backend:
+    postgres
+    express
+    sequlize

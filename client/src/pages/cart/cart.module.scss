@@ -1,0 +1,12 @@
+.cartContainer {
+  @apply flex flex-col;
+}
+.cartSectionTitle {
+  @apply font-bold text-5xl mb-6;
+}
+.cartItemsContainer {
+  @apply flex flex-col gap-y-7;
+}
+.cartCheckContainer {
+  @apply mt-7 text-right;
+}

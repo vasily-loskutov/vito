@@ -1,0 +1,15 @@
+.header {
+  @apply bg-[#f4f4f4];
+}
+.container {
+  @apply flex items-center justify-around;
+}
+.headerContainer {
+  @apply flex items-center gap-x-8 text-2xl;
+}
+.headerNav {
+  @apply flex items-center gap-x-4 ;
+}
+.headerIco {
+  @apply text-2xl basicHover;
+}

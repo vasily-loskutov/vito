@@ -1,0 +1,6 @@
+.favItemContainer {
+  @apply flex text-xl items-center gap-x-8 border rounded shadow-sm p-6;
+}
+.textStyle {
+  @apply font-bold text-slate-700 hover:text-slate-600 transition-all mb-3;
+}

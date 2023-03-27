@@ -1,0 +1,30 @@
+@tailwind base;
+
+@layer components {
+  .basicHover {
+    @apply hover:text-gray-600 transition-all;
+  }
+}
+@tailwind components;
+@tailwind utilities;
+body,
+html {
+  height: 100%;
+}
+#__next{
+  display: flex;
+  flex-direction: column;
+  height: 10000%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentStyle {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}

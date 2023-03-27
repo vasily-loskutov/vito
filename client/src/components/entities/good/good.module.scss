@@ -1,0 +1,21 @@
+.good {
+  @apply flex flex-col items-center pt-3;
+}
+.goodContainer {
+  @apply flex gap-x-3;
+}
+.goodTitle {
+  @apply font-bold text-xl ;
+}
+.goodPrice {
+  @apply font-normal;
+}
+.goodInfo {
+  @apply flex items-center  gap-7 mt-3;
+}
+.goodIco {
+  @apply text-2xl basicHover;
+}
+.heartClick {
+  @apply text-red-500 hover:text-red-600;
+}
