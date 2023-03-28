@@ -16,7 +16,7 @@ const  UserCommentList:FC = () => {
         console.log(data)
     return ( 
     <div className="overflow-scroll overflow-x-hidden  h-[450px] w-full flex flex-col gap-y-2">
-        {!isLoading ? data.length !== 0 ? data.map((review)=><Review data={review} isEditReview={true} key={review.id} position="horizontal" />) :<UserCommentsEmpty/> : "Loading"}
+        {!isLoading ? data.length !== 0 ? data.map((review)=><Review data={review} isEditReview={true} key={review.id} position="horizontal" />) : <UserCommentsEmpty/> : "Loading"}
     </div>
     
 

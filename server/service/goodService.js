@@ -1,6 +1,6 @@
 const Good = require("../models/good");
 const PurchasedGood = require("../models/purchasedGood");
-
+const search = require("../utils/search")
 class GoodService {
   async getGoods() {
 
@@ -43,6 +43,12 @@ class GoodService {
       price: payload.price,
     });
     return purchasedGood;
+  }
+
+  async search(message) {
+    const foundGoods = await Good.findAll({ raw: true })
+    const result = search(message, foundGoods);
+    return result;
   }
   async getPurchasedGood(id) {
     const purchasedGoods = await PurchasedGood.findAll({

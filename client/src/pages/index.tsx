@@ -1,6 +1,6 @@
 
 import { HeaderWrapper } from '@shared'
-import { wrapper,goodsApi,useRefreshQuery,authApi,useGetUsersQuery  } from '@redux'
+import { wrapper,goodsApi,useRefreshQuery} from '@redux'
 import { IGood } from '@models'
 import { Good } from '@entities'
 import { useEffect } from 'react'

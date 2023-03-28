@@ -17,6 +17,16 @@ export const goodsApi = createApi({
             })
 
         }),
+        search: builder.query<IGood[], string>({
+            query: (message) => (
+
+                {
+                    url: `/goods/search`,
+                    method: "POST",
+                    body: { message: message },
+                }),
+            transformResponse: (response: Array<IGood[]>) => response.findGoods
+        }),
 
         getGood: builder.query<IGood, string>({
             query: (goodId) => ({
@@ -24,8 +34,8 @@ export const goodsApi = createApi({
             }),
             transformResponse: (response: Array<IGood>) => response[0]
         }),
-
     })
+
 })
-export const { useGetGoodQuery } = goodsApi
+export const { useGetGoodQuery, useLazySearchQuery } = goodsApi
 export default goodsApi

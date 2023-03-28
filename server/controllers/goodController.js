@@ -46,6 +46,17 @@ class GoodContoller {
       next(e);
     }
   }
+  async search(req, res, next) {
+    try {
+      const { message } = req.body;
+      console.log(req.body)
+      const findGoods = await goodService.search(message);
+      return res.send({ findGoods });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async getPurchasedGood(req, res, next) {
     try {
       const { id } = req.params;

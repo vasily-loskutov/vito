@@ -19,7 +19,7 @@ const Good:FC<PropsTypes> = ({good}) => {
    const {Text,Title} = Typography
   const {addToCart, addToFavorite}= useActions()
   const {favoriteItems} = useAppSelector(state=>state.favorite)
- 
+    console.log(good)
   const addToFav = ()=>{
       const favItem = {
             name: good.name,  

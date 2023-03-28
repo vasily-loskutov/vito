@@ -1,6 +1,6 @@
 import {wrapper,makeStore,AppStore} from "./store";
 import { cartActions } from "./cartApi/cart.slice";
-import { goodsApi,useGetGoodQuery } from "./goodsApi/goodsApi";
+import { goodsApi,useGetGoodQuery,useLazySearchQuery } from "./goodsApi/goodsApi";
 import {useLogInMutation, useRegisterMutation,useLogOutMutation,useRefreshQuery, useGetUsersQuery,useUserUpdateMutation} from "./authApi/authApi";
 import authApi from "./authApi/authApi";
 import { favoriteActions } from "./favoritesApi/favorites.slice";
@@ -16,6 +16,6 @@ export {
     useSaveStoryGoodsMutation,useGetStoryGoodsQuery,storyBuyApi,
     useGetReviewQuery,useCreateReviewMutation,useDeleteReviewMutation,
     useUpdateReviewMutation,reviewApi,useGetUserReviewQuery,
-    useGetGoodQuery
+    useGetGoodQuery,useLazySearchQuery
 }
 export type{AppStore}

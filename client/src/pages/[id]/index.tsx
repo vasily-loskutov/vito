@@ -49,7 +49,7 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
     <div>
 
       <Title>Комментарии:</Title>
-      {isAuth && < CreateReview />}
+      {isAuth && isВought === -1 && < CreateReview />}
       <div className='relative'>
 
         <Carousel

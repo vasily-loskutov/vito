@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState, FC, memo, useEffect } from "react";
-import { Layout, Drawer, Input, Menu, Badge, Modal, Tabs, Button } from 'antd';
+import { Layout, Drawer, Input, Menu, Badge, Modal, Tabs } from 'antd';
 import type { MenuProps, TabsProps } from "antd"
 const { Search } = Input;
 const { Header, Footer, Content } = Layout;
@@ -10,10 +10,11 @@ import {
 } from '@ant-design/icons';
 import { Lobster } from "next/font/google";
 import Link from "next/link"
+import { useRouter } from 'next/router'
 import styles from "./headerWrapper.module.scss"
 import { useAppSelector } from "@hooks"
 import { LogIn, Register } from "@entities"
-
+import { useLazySearchQuery } from "@redux"
 
 const lobster = Lobster({
   weight: ["400"],
@@ -38,7 +39,17 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
       type,
     } as MenuItem;
   }
-  const onSearch = (value: string) => console.log(value)
+  const [searchGoodsQuery, { isLoading: searchGoodsLoading, data: searchGoods }] = useLazySearchQuery()
+  const router = useRouter()
+  const onSearch = (value: string) => {
+    console.log(value)
+    router.push({
+      pathname: '/search/[message]',
+      query: { message: value }
+    })
+    searchGoodsQuery(value)
+  }
+
   const [open, setOpen] = useState(false)
   const handleClose = () => {
     setOpen((prev) => !prev)
@@ -120,7 +131,7 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
 
           {!isAuth && (
             <Modal open={isModalOpen} onCancel={handleCancel} footer={[]}>
-              <div className="flex flex-col items-center ">
+              <div className="flex flex-col items-center  ">
                 <Tabs defaultActiveKey="1" activeKey={activeKey} items={tabItems} onChange={onActiveKey} />
               </div>
 
@@ -133,10 +144,12 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
                 <Link href="/"><h1 className={lobster.className + " text-3xl"} style={lobster.style}>Vito</h1></Link>
                 <MenuOutlined onClick={handleOpen} className="basicHover text-2xl" />
                 <Drawer title="Каталог" placement="left" onClose={handleClose} open={open}>
-                  <Menu onClick={onClick} className='h-full w-full' mode="vertical" items={items} />
+                  <Menu onClick={onClick} className='h-full w-full border-black ' mode="vertical" items={items} />
                 </Drawer>
               </div>
+
               <Search placeholder="Поиск..." onSearch={onSearch} size="middle" className="max-w-[400px] flex items-center" />
+
               <nav className={styles.headerNav} >
                 <Link href="/favorites">
                   <Badge count={favoriteItems.length} size="small" offset={[0, 7]}> <HeartOutlined className={styles.headerIco} /></Badge>

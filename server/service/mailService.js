@@ -11,6 +11,7 @@ class MailService {
       },
       tls: {
         rejectUnauthorized: false,
+
       },
     });
   }
