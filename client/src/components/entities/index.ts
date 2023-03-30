@@ -8,4 +8,5 @@ import StoryGoodsList from "./storyGoods/storyGoods";
 import CreateReview from "./CreateReview/CreateReview"
 import Review from "./review/review"
 import UserCommentList from "./userComments/userComments"
-export {Good,CartItem,FavoriteItem,LogIn,Register,Setting,StoryGoodsList,CreateReview,Review,UserCommentList}
+import Filter from "./filter/filter"
+export {Good,CartItem,FavoriteItem,LogIn,Register,Setting,StoryGoodsList,CreateReview,Review,UserCommentList,Filter}

@@ -39,7 +39,7 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
       type,
     } as MenuItem;
   }
-  const [searchGoodsQuery, { isLoading: searchGoodsLoading, data: searchGoods }] = useLazySearchQuery()
+  const [searchGoodsQuery] = useLazySearchQuery()
   const router = useRouter()
   const onSearch = (value: string) => {
     console.log(value)
@@ -48,36 +48,31 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
       query: { message: value }
     })
     searchGoodsQuery(value)
+
   }
 
   const [open, setOpen] = useState(false)
   const handleClose = () => {
     setOpen((prev) => !prev)
   }
-  const onClick = () => {
-    console.log("click")
+  const onClick = (value: any) => {
+
+    router.push({
+      pathname: '/search/[message]',
+      query: { message: value.key }
+    })
+    searchGoodsQuery(value.key)
+    handleClose()
   }
   const handleOpen = () => {
     setOpen((prev) => !prev)
   }
   const items: MenuItem[] = [
-    getItem('Navigation One', 'sub1', <MailOutlined />, [
-      getItem('Item 1', null, null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
-      getItem('Item 2', null, null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
+    getItem('Смартфоны', 'sub1', <MailOutlined />, [
+      getItem('Samsung', null, null, [getItem('Samsung a12', 'Samsung')], 'group'),
+      getItem('Iphone', null, null, [getItem('Iphone 14 pro max', 'Iphone')], 'group'),
     ]),
 
-    getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-      getItem('Option 5', '5'),
-      getItem('Option 6', '6'),
-      getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
-    ]),
-
-    getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-      getItem('Option 9', '9'),
-      getItem('Option 10', '10'),
-      getItem('Option 11', '11'),
-      getItem('Option 12', '12'),
-    ]),
   ];
   const { cartItems } = useAppSelector(state => state.cart)
   const { favoriteItems } = useAppSelector(state => state.favorite)
@@ -143,7 +138,7 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
               <div className=" flex items-center gap-x-8">
                 <Link href="/"><h1 className={lobster.className + " text-3xl"} style={lobster.style}>Vito</h1></Link>
                 <MenuOutlined onClick={handleOpen} className="basicHover text-2xl" />
-                <Drawer title="Каталог" placement="left" onClose={handleClose} open={open}>
+                <Drawer title="Каталог" placement="left" onClose={handleClose} open={open} className="max-w-[450px]">
                   <Menu onClick={onClick} className='h-full w-full border-black ' mode="vertical" items={items} />
                 </Drawer>
               </div>

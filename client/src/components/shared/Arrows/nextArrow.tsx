@@ -10,7 +10,7 @@ type PropTypes = {
     onClick?:MouseEventHandler<HTMLSpanElement>
 }
 const NextArrow:FC<PropTypes> = ({ style, className, onClick }) => {
-    return (<RightOutlined shape="circle" style={style} className={className + "z-50 text-2xl absolute right-[-20px] bottom-[150px]"} onClick={onClick} />);
+    return (<RightOutlined shape="circle" style={style} className={className + "z-50 text-2xl absolute right-[-20px] bottom-[160px]"} onClick={onClick} />);
 }
 
 export default NextArrow;

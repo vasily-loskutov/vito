@@ -4,6 +4,9 @@
   .basicHover {
     @apply hover:text-gray-600 transition-all;
   }
+  .borderGreen{
+    @apply border-green-500
+  }
 }
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +14,7 @@ body,
 html {
   height: 100%;
 }
+
 #__next{
   display: flex;
   flex-direction: column;

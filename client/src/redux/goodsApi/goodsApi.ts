@@ -19,13 +19,12 @@ export const goodsApi = createApi({
         }),
         search: builder.query<IGood[], string>({
             query: (message) => (
-
                 {
                     url: `/goods/search`,
                     method: "POST",
                     body: { message: message },
                 }),
-            transformResponse: (response: Array<IGood[]>) => response.findGoods
+            transformResponse: (response: Array<IGood>) => response.findGoods
         }),
 
         getGood: builder.query<IGood, string>({
