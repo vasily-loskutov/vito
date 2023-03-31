@@ -52,7 +52,7 @@ const Setting: FC = () => {
           name="email"
           rules={[{ required: true, message: 'Please input your email!' }]}
         >
-          <Input status={!user.isAuctivated ? "warning" : ""} prefix={<ExclamationCircleOutlined />} />
+          <Input status={!user.isAuctivated ? "warning" : ""} prefix={!user.isAuctivated && <ExclamationCircleOutlined />} />
         </Form.Item>
 
         <Form.Item>

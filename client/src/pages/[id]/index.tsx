@@ -2,7 +2,7 @@ import { IGood, IReview } from '@models';
 import { FC } from 'react';
 
 import { HeaderWrapper, CarouselGood, NextArrow, PrevArrow } from '@shared'
-import { wrapper, goodsApi, reviewApi, useGetUserReviewQuery } from '@redux'
+import { wrapper, goodsApi, reviewApi, useGetUserReviewQuery, useGetStoryGoodsQuery } from '@redux'
 import { Rate, Button, Typography, Carousel } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -22,11 +22,12 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
 
   const { isAuth, user } = useAppSelector(state => state.user)
   const { data: userReview, isLoading } = useGetUserReviewQuery(user.id)
-
   const arrayData = isAuth ? !isLoading ? userReview : [] : []
 
-  const isВought = arrayData.findIndex((item) => item.goodId === data.id);
+  const { data: storyGoodUser, isLoading: storyGoodLoading } = useGetStoryGoodsQuery(user.id)
 
+  const isВought = arrayData.findIndex((item) => item.goodId === data.id);
+  const isPurchasedGoods = !storyGoodLoading ? storyGoodUser.findIndex((item) => item.linkToGoodPage === data.id) : -1
 
   return (<HeaderWrapper>
     <div className="mt-10 border border-slate-200 flex items-center">
@@ -49,7 +50,7 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
     <div>
 
       <Title>Комментарии:</Title>
-      {isAuth && isВought === -1 && < CreateReview />}
+      {isAuth && isВought === -1 && isPurchasedGoods !== -1 && < CreateReview />}
       <div className='relative'>
 
         <Carousel

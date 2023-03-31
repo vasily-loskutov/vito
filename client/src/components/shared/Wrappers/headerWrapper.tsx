@@ -69,8 +69,8 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
   }
   const items: MenuItem[] = [
     getItem('Смартфоны', 'sub1', <MailOutlined />, [
-      getItem('Samsung', null, null, [getItem('Samsung a12', 'Samsung')], 'group'),
-      getItem('Iphone', null, null, [getItem('Iphone 14 pro max', 'Iphone')], 'group'),
+      getItem('Samsung', null, null, [getItem('Смартфоны Samsung', 'Samsung')], 'group'),
+      getItem('Apple iphone', null, null, [getItem('Смартфоны Iphone', 'Iphone')], 'group'),
     ]),
 
   ];
