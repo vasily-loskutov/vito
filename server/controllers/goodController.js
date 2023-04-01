@@ -69,6 +69,5 @@ class GoodContoller {
     }
   }
 }
-{
-}
+
 module.exports = new GoodContoller();

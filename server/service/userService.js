@@ -42,6 +42,7 @@ class UserService {
     if (!user) {
       throw ApiError.UnauthorizedError("Некорреткная ссылка активации");
     }
+
     user.isActivated = true;
     await user.save();
   }

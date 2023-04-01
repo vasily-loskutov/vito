@@ -32,7 +32,7 @@ class GoodService {
     return good;
   }
   async purchasedGood(payload) {
-    console.log(payload);
+
     const purchasedGood = await PurchasedGood.create({
       name: payload.name,
       userId: payload.userId,

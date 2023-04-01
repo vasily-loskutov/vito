@@ -24,7 +24,6 @@ class GoodContoller {
   async createReview(req, res, next) {
     try {
       const payload = req.body;
-      console.log(payload);
       const review = await ReviewService.createReview(payload);
       return res.send({ review });
     } catch (e) {

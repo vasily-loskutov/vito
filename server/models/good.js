@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../db");
 
-class Good extends Model {}
+class Good extends Model { }
 
 Good.init(
   {
@@ -29,6 +29,7 @@ Good.init(
       allowNull: false,
       type: DataTypes.INTEGER,
     },
+   
   },
   {
     sequelize,

@@ -3,7 +3,6 @@ import { useAppSelector,useActions } from '@hooks'
 import { HeaderWrapper } from '@shared'
 import {useLogOutMutation} from "@redux"
 import {Setting,StoryGoodsList,UserCommentList} from "@entities"
-import Head from 'next/head'
 import { Card, Menu} from 'antd'
 import { AppstoreOutlined, SettingOutlined,CaretLeftOutlined,ArrowLeftOutlined,EditOutlined  } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -63,11 +62,7 @@ export default function Profile() {
 
         
   return (
-    <HeaderWrapper>
-      <Head>
-        <title>Профиль</title>
-      </Head>
-
+    <HeaderWrapper title="Профиль">
       <Card title="Ваш профиль" className="w-full mt-8 ">
         <div className="flex">
         <Menu onClick={onClick} style={{ width: 256 }} mode="vertical" items={items} defaultOpenKeys={['setting']}/>

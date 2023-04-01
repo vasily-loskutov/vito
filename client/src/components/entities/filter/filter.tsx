@@ -1,6 +1,6 @@
 
 import { IGood } from '@models';
-import { FC, SetStateAction, useEffect } from 'react';
+import { FC, SetStateAction, useEffect,Dispatch } from 'react';
 import { Slider, Button, InputNumber, Typography } from 'antd';
 
 
@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 type PropsTypes = {
     goods: IGood[],
-    setState: SetStateAction<void>
+    setState: Dispatch<SetStateAction<IGood[]>>
 }
 type IValues = {
     min: number,
@@ -26,8 +26,8 @@ const FIlter: FC<PropsTypes> = ({ goods, setState }) => {
     const defaultState: IDefaultState = {
         changeFilterButton: 1,
         values: {
-            min: goods.at(-1).price,
-            max: goods[0].price
+            min: goods[0].price,
+            max: goods.at(-1).price
         }
 
     }

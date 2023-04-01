@@ -2,6 +2,6 @@ import { IUser } from "./user";
 
 export interface IAuthResponse {
     accessToken:string;
-    refreshToke:string;
+    refreshToken:string;
     user:IUser
 }

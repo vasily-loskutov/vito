@@ -3,19 +3,29 @@ import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
+  FetchBaseQueryMeta,
+
 } from '@reduxjs/toolkit/query'
 
-import  config  from '@config'
+import config from '@config'
 import { userActions } from '../authApi/user.slice'
-const baseQuery = fetchBaseQuery({baseUrl:config.baseURL,credentials:'include',
-prepareHeaders:(headers)=>{
-  const token = JSON.parse(localStorage.getItem('token'))
-  if(token){
-    headers.set('authorization',`Bearer ${token}`)
+
+import { IAuthResponse } from '@models'
+
+
+
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: config.baseURL, credentials: 'include',
+  prepareHeaders: (headers) => {
+    const token = JSON.parse(localStorage.getItem('token'))
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+    return headers
   }
-  return headers
-}
 })
+
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -24,23 +34,16 @@ const baseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions)
   if (result.error && result.error.status === 401) {
     // try to get a new token
-      
-    const refreshResult = await baseQuery(
-      {
-        method: "GET",
-        url: "/auth/refresh",
-      },
-      api,
-      extraOptions
-    );
-    console.log(refreshResult)
+
+    const refreshResult = await baseQuery({ method: "GET", url: "/auth/refresh" }, api, extraOptions)
+
     if (refreshResult.data) {
       // store the new token
-        localStorage.setItem("token",JSON.stringify(refreshResult.data.accessToken))
+      localStorage.setItem("token", JSON.stringify(refreshResult.data.accessToken))
       // retry the initial query
       result = await baseQuery(args, api, extraOptions)
     } else {
-         api.dispatch(userActions.logOut())
+      api.dispatch(userActions.logOut())
     }
   }
   return result

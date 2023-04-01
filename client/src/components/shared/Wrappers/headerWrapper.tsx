@@ -15,15 +15,17 @@ import styles from "./headerWrapper.module.scss"
 import { useAppSelector } from "@hooks"
 import { LogIn, Register } from "@entities"
 import { useLazySearchQuery } from "@redux"
-
+import Head from "next/head";
 const lobster = Lobster({
   weight: ["400"],
   subsets: ['latin'],
 
 })
 type MenuItem = Required<MenuProps>['items'][number];
-
-const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
+type PropTypes = {
+  title?: string
+}
+const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vito" }) => {
   const getItem = (
     label: React.ReactNode,
     key?: React.Key | null,
@@ -120,6 +122,9 @@ const HeaderWrapper: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
       {domLoaded && (
         <>
 

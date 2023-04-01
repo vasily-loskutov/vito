@@ -21,31 +21,35 @@ export default function FindGoods({ data }: PropsTypes) {
 
     const { Title } = Typography
     return (
-        <HeaderWrapper>
-            <div className='flex flex-col gap-y-4'>
-                <Title>Результаты поиска</Title>
+        <>
 
-                {data.length > 0 ? (
-                    <>
-                        <div className="flex gap-x-6">
-                            <div >
-                                <Filter goods={data} setState={setGoods} />
+
+            <HeaderWrapper title="Результаты поиска">
+                <div className='flex flex-col gap-y-4'>
+                    <Title>Результаты поиска</Title>
+
+                    {data.length > 0 ? (
+                        <>
+                            <div className="flex gap-x-6">
+                                <div >
+                                    <Filter goods={data} setState={setGoods} />
+                                </div>
+                                <div className="flex  gap-4 ">
+                                    {goods.map((good) => (<Good good={good} key={good.id} />))}
+                                </div>
                             </div>
-                            <div className="flex  gap-4 ">
-                                {goods.map((good) => (<Good good={good} key={good.id} />))}
-                            </div>
-                        </div>
-                    </>) : (<Title className="text-center">Ни чего не найдено :(</Title>)}
+                        </>) : (<Title className="text-center">Ни чего не найдено :(</Title>)}
 
 
-            </div>
+                </div>
 
 
-        </HeaderWrapper>
+            </HeaderWrapper>
+        </>
     )
 }
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
-     
+
     const { data } = await store.dispatch(goodsApi.endpoints.search.initiate(context.params.message))
 
     return { props: { data } }

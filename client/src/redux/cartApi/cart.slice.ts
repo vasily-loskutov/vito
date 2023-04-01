@@ -69,7 +69,7 @@ export const cartSlice= createSlice({
             localStorageService.saveState(CART_KEY,state.cartItems)
             localStorageService.saveState(TOTAL_PRICE_KEY,state.totalPrice)
         },
-        removeCart(state,action:PayloadAction<string>){
+        removeCart(state){
                 state.cartItems = []
                 state.totalPrice = 0
                 localStorageService.saveState(CART_KEY,state.cartItems)

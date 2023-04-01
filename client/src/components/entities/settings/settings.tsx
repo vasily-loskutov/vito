@@ -56,10 +56,11 @@ const Setting: FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" >
+          <Button htmlType="submit"  >
             Сохранить
           </Button>
         </Form.Item>
+
       </Form>
     </>
   )
