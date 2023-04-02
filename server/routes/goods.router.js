@@ -8,5 +8,6 @@ router.delete("/:id", GoodContoller.deleteGood);
 router.post("/", GoodContoller.createGood);
 router.post("/purchased", GoodContoller.purchasedGood);
 router.get("/purchased/:id", GoodContoller.getPurchasedGood);
-router.post('/search',GoodContoller.search)
+router.post('/search', GoodContoller.search)
+router.patch('/:id', GoodContoller.updateGood)
 module.exports = router;

@@ -1,2 +1,3 @@
-import {displayDate} from "./displayDate"
-export {displayDate}
+import { displayDate } from "./displayDate"
+import pagination from "./pagination"
+export { displayDate, pagination }

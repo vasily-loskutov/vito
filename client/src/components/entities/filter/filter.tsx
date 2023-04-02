@@ -1,6 +1,6 @@
 
 import { IGood } from '@models';
-import { FC, SetStateAction, useEffect,Dispatch } from 'react';
+import { FC, SetStateAction, useEffect, Dispatch } from 'react';
 import { Slider, Button, InputNumber, Typography } from 'antd';
 
 
@@ -23,54 +23,63 @@ interface IDefaultState {
 
 const FIlter: FC<PropsTypes> = ({ goods, setState }) => {
     const [isLoading, setLoading] = useState(false)
+
     const defaultState: IDefaultState = {
         changeFilterButton: 1,
         values: {
-            min: goods[0].price,
-            max: goods.at(-1).price
+
+            min: _.orderBy(goods, ['price'], ['desc']).at(-1).price,
+            max: _.orderBy(goods, ['price'], ['desc'])[0].price
         }
 
     }
-    const { Text } = Typography
     const [changeFilterButton, setChangeFilterButton] = useState(defaultState.changeFilterButton)
     const [values, setValues] = useState(defaultState.values)
 
-    useEffect(() => {
-        switch (changeFilterButton) {
-            case 1:
-                setState(_.orderBy(goods, ['rate'], ['desc']))
-                break
-            case 2:
-                setState(_.orderBy(goods, ['price'], ['desc']))
-                break
-            case 3:
-                setState(_.orderBy(goods, ['price'], ['asc']))
 
-                break
-        }
+    const { Text } = Typography
 
-    }, [changeFilterButton])
+
+
     useEffect(() => {
         setLoading(true)
     }, [])
     useEffect(() => {
         setValues(defaultState.values)
+
     }, [goods])
-    const applyFilters = () => {
+    useEffect(() => {
         setState(goods.filter(item => item.price >= values.min && item.price <= values.max))
-    }
+        
+    }, [values])
+    useEffect(() => {
+        switch (changeFilterButton) {
+            case 1:
+                setState((prev)=>_.orderBy(prev, ['rate'], ['desc']))
+                break
+            case 2:
+                setState((prev)=>_.orderBy(prev, ['price'], ['desc']))
+                break
+            case 3:
+                setState((prev)=>_.orderBy(prev, ['price'], ['asc']))
+                break
+        }
+
+    }, [changeFilterButton,values])
+
+
     const handleChange = (values: number[]) => {
         setValues({ min: values[0], max: values[1] })
-        applyFilters()
+
     }
     const handleMin = (value: number) => {
         setValues((prev) => ({ max: prev.max, min: value }))
-        applyFilters()
+
 
     }
     const handleMax = (value: number) => {
         setValues((prev) => ({ min: prev.min, max: value }))
-        applyFilters()
+
 
     }
     const setDefault = () => {
@@ -93,7 +102,7 @@ const FIlter: FC<PropsTypes> = ({ goods, setState }) => {
                             <span className='text-2xl'>-</span>
                             <InputNumber value={values.max} onChange={handleMax} size="large" />
                         </div>
-                        <Slider range={{ draggableTrack: true }} min={goods.at(-1).price} value={[values.min, values.max]} onChange={handleChange} onAfterChange={applyFilters} max={goods[0].price} defaultValue={[goods.at(-1).price, goods[0].price]} />
+                        <Slider range={{ draggableTrack: true }} min={defaultState.values.min} value={[values.min, values.max]} onChange={handleChange} max={defaultState.values.max} defaultValue={[goods.at(-1).price, goods[0].price]} />
 
                         <Button size='large' className='w-full' danger onClick={setDefault}>Очистить фильтр</Button>
                     </div>

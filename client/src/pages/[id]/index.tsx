@@ -1,4 +1,4 @@
-import { IGood, IReview } from '@models';
+import { ICartItem, IGood, IReview } from '@models';
 import { FC } from 'react';
 import Head from "next/head"
 import { HeaderWrapper, CarouselGood, NextArrow, PrevArrow } from '@shared'
@@ -22,7 +22,14 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { addToCart } = useActions()
   const handleClick = () => {
-    addToCart(data)
+    const cartItem: ICartItem = {
+      linkToGoodPage: data.id,
+      name: data.name,
+      photo: data.photo,
+      count: data.count,
+      price: data.price
+    }
+    addToCart(cartItem)
     messageApi.success("Товар добавлен в коризну!")
   }
 

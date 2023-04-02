@@ -37,6 +37,18 @@ class GoodContoller {
       next(e);
     }
   }
+  async updateGood(req, res, next) {
+    try {
+      const { id } = req.params;
+      const payload = req.body
+      console.log(payload)
+      const good = await goodService.updateGood(id, payload);
+      return res.send({ good });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async purchasedGood(req, res, next) {
     try {
       const payload = req.body;

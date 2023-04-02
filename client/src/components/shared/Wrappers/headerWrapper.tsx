@@ -5,8 +5,8 @@ const { Search } = Input;
 const { Header, Footer, Content } = Layout;
 import {
   HeartOutlined, ShoppingCartOutlined,
-  UserOutlined, MenuOutlined, MailOutlined, AppstoreOutlined,
-  SettingOutlined, GithubOutlined
+  UserOutlined, MenuOutlined, DatabaseOutlined,
+  GithubOutlined, MobileOutlined, LaptopOutlined
 } from '@ant-design/icons';
 import { Lobster } from "next/font/google";
 import Link from "next/link"
@@ -70,11 +70,24 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
     setOpen((prev) => !prev)
   }
   const items: MenuItem[] = [
-    getItem('Смартфоны', 'sub1', <MailOutlined />, [
+    getItem('Смартфоны', 'sub1', <MobileOutlined />, [
+      getItem('', null, null, [getItem('Все смартфоны', 'Смартфон')], 'group'),
       getItem('Samsung', null, null, [getItem('Смартфоны Samsung', 'Samsung')], 'group'),
       getItem('Apple iphone', null, null, [getItem('Смартфоны Iphone', 'Iphone')], 'group'),
+      getItem('Xiaomi', null, null, [getItem('Смартфоны Xiaomi', 'Xiaomi')], 'group'),
     ]),
+    getItem('Ноутбуки', 'sub2', <LaptopOutlined />, [
+      getItem('', null, null, [getItem('Все ноутбуки', 'Ноутбук')], 'group'),
+      getItem('Honor', null, null, [getItem('Ноутбуки Honor', 'Honor')], 'group'),
+      getItem('MSI', null, null, [getItem('Ноутбуки MSI', 'MSI')], 'group'),
+      getItem('Huawei', null, null, [getItem('Ноутбуки Huawei', 'Huawei')], 'group'),
+    ]),
+    getItem('Холодильники', 'sub3', <DatabaseOutlined />, [
+      getItem('', null, null, [getItem('Все холодильники', 'Холодильник')], 'group'),
+      getItem('Haier', null, null, [getItem('Холодильники Haier', 'Haier')], 'group'),
+      getItem('Candy', null, null, [getItem('Холодильники Candy', 'Candy')], 'group'),
 
+    ]),
   ];
   const { cartItems } = useAppSelector(state => state.cart)
   const { favoriteItems } = useAppSelector(state => state.favorite)

@@ -31,6 +31,18 @@ class GoodService {
     });
     return good;
   }
+  async updateGood(id, payload) {
+    const good = await Good.update({
+      name: payload.name,
+      description: payload.description,
+      price: payload.price,
+      photo: payload.photo,
+      rate: payload.rate,
+    }, { where: { id } })
+
+    return good;
+  }
+
   async purchasedGood(payload) {
 
     const purchasedGood = await PurchasedGood.create({
