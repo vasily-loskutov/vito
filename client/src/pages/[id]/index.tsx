@@ -41,7 +41,7 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
   const { data: storyGoodUser, isLoading: storyGoodLoading } = useGetStoryGoodsQuery(user.id)
 
   const isВought = arrayData.findIndex((item) => item.goodId === data.id);
-  const isPurchasedGoods = !storyGoodLoading ? storyGoodUser.findIndex((item) => item.linkToGoodPage === data.id) : -1
+  const isPurchasedGoods = isAuth ? !storyGoodLoading ? storyGoodUser.findIndex((item) => item.linkToGoodPage === data.id) : -1 : -1
 
   return (
     <>
