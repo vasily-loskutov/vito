@@ -105,6 +105,7 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
   }
   const showModal = () => {
     setIsModalOpen(true);
+
   }
   const [activeKey, setActiveKey] = useState("1")
   const toRegister = () => {
@@ -151,8 +152,8 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
             </Modal>
           )}
 
-          <Header className="bg-[#f4f4f4] flex items-center  justify-center" >
-            <div className="container  flex justify-around">
+          <Header className="bg-[#f4f4f4] flex items-center justify-center" >
+            <div className="container  flex justify-between">
               <div className=" flex items-center gap-x-8">
                 <Link href="/"><h1 className={lobster.className + " text-3xl"} style={lobster.style}>Vito</h1></Link>
                 <MenuOutlined onClick={handleOpen} className="basicHover text-2xl" />
@@ -179,7 +180,7 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
 
           <Content className="bg-white content mb-40">
             <div className="flex justify-around">
-              <div className="container ">
+              <div className="container">
 
                 {children}
               </div>

@@ -32,10 +32,10 @@ export default function Home({ data }: PropsTypes) {
   return (
     <>
       <HeaderWrapper >
-        <div className='flex flex-col'>
+        <div className='flex flex-col justify-center'>
           <Title className='text-center' level={1}>Популярные товары</Title>
 
-          <div className='mt-5 flex gap-4 flex-wrap justify-center'>
+          <div className='mt-5 flex gap-8 flex-wrap'>
 
             {popularGoods.slice(0, 8).map(good => <Good good={good} key={good.id} />)}
           </div>

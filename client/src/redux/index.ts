@@ -2,7 +2,7 @@ import { wrapper, makeStore, AppStore } from "./store";
 import type { AppState } from "./store"
 import { cartActions } from "./cartApi/cart.slice";
 import { goodsApi, useGetGoodQuery, useLazySearchQuery } from "./goodsApi/goodsApi";
-import { useLogInMutation, useRegisterMutation, useLogOutMutation, useRefreshQuery, useGetUsersQuery, useUserUpdateMutation } from "./authApi/authApi";
+import { useLogInMutation, useRegisterMutation, useLogOutMutation, useRefreshQuery, useGetUsersQuery, useUserUpdateMutation ,useDeleteUserMutation} from "./authApi/authApi";
 import authApi from "./authApi/authApi";
 import { favoriteActions } from "./favoritesApi/favorites.slice";
 import reviewApi, { useGetReviewQuery, useCreateReviewMutation, useDeleteReviewMutation, useUpdateReviewMutation, useGetUserReviewQuery } from "./reviewApi/reviewApi";
@@ -17,6 +17,6 @@ export {
     useSaveStoryGoodsMutation, useGetStoryGoodsQuery, storyBuyApi,
     useGetReviewQuery, useCreateReviewMutation, useDeleteReviewMutation,
     useUpdateReviewMutation, reviewApi, useGetUserReviewQuery,
-    useGetGoodQuery, useLazySearchQuery, AppState
+    useGetGoodQuery, useLazySearchQuery, AppState,useDeleteUserMutation
 }
 export type { AppStore }

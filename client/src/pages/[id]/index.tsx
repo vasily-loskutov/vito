@@ -1,11 +1,12 @@
 import { ICartItem, IGood, IReview } from '@models';
 import { FC } from 'react';
-import Head from "next/head"
+
 import { HeaderWrapper, CarouselGood, NextArrow, PrevArrow } from '@shared'
 import { wrapper, goodsApi, reviewApi, useGetUserReviewQuery, useGetStoryGoodsQuery } from '@redux'
 import { Rate, Button, Typography, Carousel, message } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
 import { CreateReview, Review } from '@entities';
 import { useActions, useAppSelector } from '@hooks';
 type PropTypes = {
@@ -14,10 +15,11 @@ type PropTypes = {
 }
 
 const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
-  const { back } = useRouter()
+  const router = useRouter()
+
   const { Title, Text } = Typography
   const goBack = () => {
-    back()
+    router.back()
   }
   const [messageApi, contextHolder] = message.useMessage();
   const { addToCart } = useActions()
@@ -68,18 +70,21 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
 
           <Title>Комментарии:</Title>
           {isAuth && isВought === -1 && isPurchasedGoods !== -1 && < CreateReview />}
-          <div className='relative'>
+          {reviews.length >= 1 ?
+            <div className='relative'>
 
-            <Carousel
-              className='flex gap-x-6 mt-2 max-w-[1700px] ' dots={false} infinite={false}
-              slidesToShow={3} slidesToScroll={2}
+              <Carousel
+                className='flex gap-x-6 mt-2 max-w-[1700px] ' dots={false} infinite={false}
+                slidesToShow={3} slidesToScroll={2}
 
-              arrows prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
-              {reviews.slice(0, 6).map((review) => (<Review data={review} isEditReview={false} key={review.id} />))}
-            </Carousel>
-            {reviews.length >= 5 && (<Link href={`/${data.id}/reviews`}><Button className="w-full mt-5 pb-20" size="large" >Смотреть все комментарии </Button></Link>)}
+                arrows prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+                {reviews.slice(0, 6).map((review) => (<Review data={review} isEditReview={false} key={review.id} />))
+                }
+              </Carousel>
+              {reviews.length >= 5 && (<Link href={`/${data.id}/reviews`}><Button className="w-full mt-5 pb-20" size="large" >Смотреть все комментарии </Button></Link>)}
 
-          </div>
+            </div>
+            : <Title>Комментариев под данным товаром пока что нет!</Title>}
         </div>
       </HeaderWrapper >
     </>);

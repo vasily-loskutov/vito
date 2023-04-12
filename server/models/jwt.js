@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../db");
 
-class JWT extends Model {}
+class JWT extends Model { }
 
 JWT.init(
   {
@@ -15,7 +15,7 @@ JWT.init(
     },
     refreshToken: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT('long'),
     },
   },
   {

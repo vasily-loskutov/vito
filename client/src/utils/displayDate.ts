@@ -1,4 +1,4 @@
-export function displayDate(data:any) {
+export function displayDate(data: any) {
     const date = new Date(parseInt(data));
     const dateNow = new Date();
     const yearDif = dateNow.getFullYear() - date.getFullYear();

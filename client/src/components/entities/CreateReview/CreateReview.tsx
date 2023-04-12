@@ -14,7 +14,7 @@ const CreateReview = () => {
                 comment:values.comment,
                 minus:values.minus,
                 plus:values.plus, 
-                userId:user.id,
+                userId:+user.id,
                 goodId:+searchParams.get("id"),
                 date: Date.now(),
                 name:user.name,
@@ -23,7 +23,7 @@ const CreateReview = () => {
               console.log(review)
           createReviewMutation(review)
       };
-      
+    
       const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
       };

@@ -8,10 +8,11 @@ Good.init(
     name: {
       allowNull: false,
       type: DataTypes.STRING,
+      unique: true
     },
     description: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT('long'),
     },
     price: {
       allowNull: false,
@@ -28,8 +29,9 @@ Good.init(
     count: {
       allowNull: false,
       type: DataTypes.INTEGER,
+      defaultValue: 1
     },
-   
+
   },
   {
     sequelize,

@@ -50,22 +50,22 @@ const FIlter: FC<PropsTypes> = ({ goods, setState }) => {
     }, [goods])
     useEffect(() => {
         setState(goods.filter(item => item.price >= values.min && item.price <= values.max))
-        
+
     }, [values])
     useEffect(() => {
         switch (changeFilterButton) {
             case 1:
-                setState((prev)=>_.orderBy(prev, ['rate'], ['desc']))
+                setState((prev) => _.orderBy(prev, ['rate'], ['desc']))
                 break
             case 2:
-                setState((prev)=>_.orderBy(prev, ['price'], ['desc']))
+                setState((prev) => _.orderBy(prev, ['price'], ['desc']))
                 break
             case 3:
-                setState((prev)=>_.orderBy(prev, ['price'], ['asc']))
+                setState((prev) => _.orderBy(prev, ['price'], ['asc']))
                 break
         }
 
-    }, [changeFilterButton,values])
+    }, [changeFilterButton, values])
 
 
     const handleChange = (values: number[]) => {

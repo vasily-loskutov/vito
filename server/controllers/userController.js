@@ -35,6 +35,7 @@ class UserContoller {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
+      console.log(userData)
       return res.json(userData);
     } catch (e) {
       next(e);
@@ -91,6 +92,17 @@ class UserContoller {
       const user = await userService.updateUser(payload);
 
       res.json({ user });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async deleteUser(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const response = await userService.deleteUser(id);
+
+      res.json({ response });
     } catch (error) {
       next(error);
     }

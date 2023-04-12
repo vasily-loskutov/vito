@@ -1,12 +1,15 @@
 const User = require("../models/user");
+const PurchasedGood = require("../models/purchasedGood")
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const mailService = require("./mailService");
 const tokenService = require("./tokenService");
 const UserDto = require("../dto/user.dto");
 const ApiError = require("../exceptions/apiErorr");
+const JWT = require("../models/jwt");
 class UserService {
   async registration(email, password, name) {
+
     const candidate = await User.findOne({
       where: { email },
     });
@@ -16,11 +19,13 @@ class UserService {
     }
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = uuid.v4();
+
     const user = await User.create({
       email,
       password: hashPassword,
       name,
       activationLink,
+      isAdmin: email == "vasilijloskutov2083@gmail.com"
     });
 
     await mailService.sendActivationMail(
@@ -30,6 +35,7 @@ class UserService {
     const userDto = new UserDto(user);
 
     const tokens = tokenService.generateTokens({ ...userDto });
+
 
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
     return {
@@ -101,6 +107,12 @@ class UserService {
       }
     );
     return user;
+  }
+  async deleteUser(id) {
+    await JWT.destroy({ where: { user: id } })
+    await PurchasedGood.destroy({ where: { userId: id } })
+    const res = await User.destroy({ where: { id } });
+    return res
   }
 }
 module.exports = new UserService();

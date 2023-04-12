@@ -29,11 +29,10 @@ export default function FindGoods({ data }: PropsTypes) {
     const onChange: PaginationProps['onChange'] = (page) => {
         setCurrent(page);
     };
+
     const { Title } = Typography
     return (
         <>
-
-
             <HeaderWrapper title="Результаты поиска">
                 <div className='flex flex-col gap-y-4'>
                     <Title>Результаты поиска</Title>

@@ -35,10 +35,15 @@ class ReviewService {
     return review;
   }
   async deleteReview(id) {
+
     const review = await Review.destroy({ where: { id } });
     return review;
   }
   async updateReview(payload) {
+    const AllRate = await Review.findAll({ attributes: ['rate'], where: { goodId: payload.goodId }, raw: true });
+
+    const newRate = average(AllRate)
+    await Good.update({ rate: newRate }, { where: { id: payload.goodId } })
     const review = await Review.update(
       {
         comment: payload.comment,

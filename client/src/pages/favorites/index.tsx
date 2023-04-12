@@ -16,7 +16,8 @@ const Favorites: FC = () => {
                 (<> <Title level={1} >Избранное</Title>
                     <div className={styles.favItemsContainer}>
                         {favoriteItems.map((favItem: IFavoriteItem) => <FavoriteItem data={favItem} />)}
-                    </div></>) : <FavEmpty />
+                    </div>
+                </>) : <FavEmpty />
             }
 
         </div>
