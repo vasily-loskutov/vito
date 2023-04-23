@@ -89,8 +89,8 @@ const FIlter: FC<PropsTypes> = ({ goods, setState }) => {
     return (
         <>
             {
-                isLoading ? (<div className="w-[400px] flex flex-col gap-y-4" >
-                    <div className="flex gap-x-2">
+                isLoading ? (<div className="max-w-[400px] flex flex-col gap-y-4" >
+                    <div className="flex gap-2 flex-wrap ">
                         <Button size='small' className={changeFilterButton === 1 ? "borderGreen" : ""} onClick={() => setChangeFilterButton(1)}>По рейтингу</Button>
                         <Button size='small' className={changeFilterButton === 2 ? "borderGreen" : ""} onClick={() => setChangeFilterButton(2)}>C начала дорогие</Button>
                         <Button size='small' className={changeFilterButton === 3 ? "borderGreen" : ""} onClick={() => setChangeFilterButton(3)}>C начала дешёвые</Button>

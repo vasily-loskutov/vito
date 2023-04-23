@@ -15,8 +15,9 @@ const favouritesSlice = createSlice({
     initialState,
     reducers:{
         addToFavorite(state,action:PayloadAction<IFavoriteItem>){
+         
             const isInCart = state.favoriteItems.findIndex((f)=>f.name === action.payload.name)
-            console.log(isInCart)
+          
             if(isInCart == -1 ){
                 state.favoriteItems.push(action.payload)
                 localStorageService.saveState(FAVORITE_KEY,state.favoriteItems)

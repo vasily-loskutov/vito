@@ -9,4 +9,11 @@ import CreateReview from "./CreateReview/CreateReview"
 import Review from "./review/review"
 import UserCommentList from "./userComments/userComments"
 import Filter from "./filter/filter"
-export {Good,CartItem,FavoriteItem,LogIn,Register,Setting,StoryGoodsList,CreateReview,Review,UserCommentList,Filter}
+import CreateGood from "./createGood/createGood"
+import ChangeGoods from "./changeGoods/changeGoods";
+import ChangeCatalog from "./changeCatalog/changeCatalog";
+export {
+    Good, CartItem, FavoriteItem, LogIn, Register,
+    Setting, StoryGoodsList, CreateReview, Review,
+    UserCommentList, Filter, CreateGood, ChangeGoods, ChangeCatalog
+}

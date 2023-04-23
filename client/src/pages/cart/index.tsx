@@ -60,7 +60,7 @@ const Cart: FC = () => {
         </Modal>
         {cartItems.length > 0 ?
             (<div className={styles.cartContainer}>
-                <h1 className={styles.cartSectionTitle}>Корзина</h1>
+                <Title level={1}>Корзина</Title>
                 <div className={styles.cartItemsContainer}>
                     {cartItems.map((cartItem: ICartItem, idx: number) => <CartItem data={cartItem} key={idx} />)}
                 </div>

@@ -27,15 +27,49 @@ export const goodsApi = createApi({
                 }),
             transformResponse: (response) => response.findGoods
         }),
-
+        searchByCategory: builder.mutation<IGood[], any>({
+            query: (payload) => (
+                {
+                    url: `/goods/searchByCategory`,
+                    method: "POST",
+                    body: payload,
+                }),
+            transformResponse: (response) => response.goods
+        }),
         getGood: builder.query<IGood, string>({
             query: (goodId) => ({
                 url: `/goods/${goodId}`
+            }),
+            transformResponse: (response) => response.good,
+
+        }),
+        createGood: builder.mutation<IGood, any>({
+            query: (payload: any) => ({
+                url: `/goods/`,
+                method: "POST",
+                body: payload
+            }),
+            transformResponse: (response: Array<IGood>) => response[0]
+        }),
+        updateGood: builder.mutation<IGood, any>({
+            query: (payload: any) => ({
+                url: `/goods/`,
+                method: "PATCH",
+                body: payload
+            }),
+            transformResponse: (response: Array<IGood>) => response[0]
+        }),
+        deleteGood: builder.mutation<IGood, any>({
+            query: (goodId) => ({
+                url: `/goods/${goodId}`,
+                method: "DELETE",
+
             }),
             transformResponse: (response: Array<IGood>) => response[0]
         }),
     })
 
 })
-export const { useGetGoodQuery, useLazySearchQuery } = goodsApi
+export const { useGetGoodsQuery, useGetGoodQuery, useLazySearchQuery, useSearchQuery,
+    useCreateGoodMutation, useUpdateGoodMutation, useDeleteGoodMutation, useSearchByCategoryMutation } = goodsApi
 export default goodsApi

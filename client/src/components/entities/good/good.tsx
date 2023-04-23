@@ -1,6 +1,6 @@
 'use client'
 import { IFavoriteItem, IGood } from '@models';
-import { FC, useRef, useEffect } from 'react';
+import { FC } from 'react';
 import { Card, message, Button, Rate, Typography } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons"
 import styles from "./good.module.scss"
@@ -42,7 +42,7 @@ const Good: FC<PropsTypes> = ({ good }) => {
     addToCart(cartItem)
 
   }
-  
+
   return (
     <>
 
@@ -55,7 +55,7 @@ const Good: FC<PropsTypes> = ({ good }) => {
 
       >
         <div className={styles.goodContainer}>
-          <Text className='max-w-[150px] '>{ good.name.split('').length >= 40 ? good.name.split("").slice(0,30).join("")+"..." : good.name }</Text>
+          <Text className='max-w-[150px] '>{good.name.length >= 20 ? good.name.split("").slice(0, 30).join("") + "..." : good.name}</Text>
           <Rate disabled allowHalf defaultValue={good.rate} className="text-sm" />
         </div>
 

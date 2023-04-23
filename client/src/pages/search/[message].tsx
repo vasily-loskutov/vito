@@ -32,33 +32,33 @@ export default function FindGoods({ data }: PropsTypes) {
 
     const { Title } = Typography
     return (
-        <>
-            <HeaderWrapper title="Результаты поиска">
-                <div className='flex flex-col gap-y-4'>
-                    <Title>Результаты поиска</Title>
 
-                    {data.length > 0 ? (
-                        <>
-                            <div className="flex gap-x-6">
-                                <div >
-                                    <Filter goods={data} setState={setGoods} />
-                                </div>
-                                <div className="flex flex-col">
-                                    <div className="flex  gap-4 flex-wrap">
-                                        {dataCrop.map((good) => (<Good good={good} key={good.id} />))}
-                                    </div>
+        <HeaderWrapper title="Результаты поиска">
+            <div className='flex flex-col gap-y-4'>
+                <Title>Результаты поиска</Title>
 
-                                    {goods.length > 6 && (<Pagination defaultCurrent={1} pageSize={6} total={goods.length} onChange={onChange} className="mt-4" />)}
-                                </div>
+                {data.length > 0 ? (
+                    <>
+                        <div className="flex flex-col gap-x-6  md:flex-row">
+                            <div >
+                                <Filter goods={data} setState={setGoods} />
                             </div>
-                        </>) : (<Title className="text-center">Ни чего не найдено :(</Title>)}
+                            <div className="flex flex-col">
+                                <div className="grid grid-cols-3 gap-4 ">
+                                    {dataCrop.map((good) => (<Good good={good} key={good.id} />))}
+                                </div>
+
+                                {goods.length > 6 && (<Pagination defaultCurrent={1} pageSize={6} total={goods.length} onChange={onChange} className="mt-4" />)}
+                            </div>
+                        </div>
+                    </>) : (<Title className="text-center">Ни чего не найдено :(</Title>)}
 
 
-                </div>
+            </div>
 
 
-            </HeaderWrapper>
-        </>
+        </HeaderWrapper>
+
     )
 }
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {

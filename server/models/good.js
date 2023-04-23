@@ -20,11 +20,20 @@ Good.init(
     },
     photo: {
       allowNull: false,
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+    categories: {
+      allowNull: false,
+      type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+    subcategories: {
+      allowNull: false,
+      type: DataTypes.ARRAY(DataTypes.STRING)
     },
     rate: {
       allowNull: false,
       type: DataTypes.DOUBLE,
+      defaultValue: 0
     },
     count: {
       allowNull: false,

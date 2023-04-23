@@ -63,14 +63,19 @@ export default function Profile() {
 
   return (
     <HeaderWrapper title="Профиль">
-      <Card title="Ваш профиль" className="w-full mt-8 ">
-        <div className="flex">
+      <Card title="Ваш профиль" className="w-full mt-8">
+        <div className=" hidden md:flex">
           <Menu onClick={onClick} style={{ width: 256 }} mode="vertical" items={items} defaultOpenKeys={['setting']} />
           {changeSection === "setting" && <Setting />}
           {changeSection === "data" && <UserCommentList />}
           {changeSection === "purchases" && <StoryGoodsList />}
         </div>
-
+        <div className="flex flex-col gap-y-2 md:hidden">
+          <Menu onClick={onClick} style={{ maxWidth: 600 }} mode="horizontal" items={items} defaultOpenKeys={['setting']} />
+          {changeSection === "setting" && <Setting />}
+          {changeSection === "data" && <UserCommentList />}
+          {changeSection === "purchases" && <StoryGoodsList />}
+        </div>
       </Card>
     </HeaderWrapper>
   )

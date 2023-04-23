@@ -66,12 +66,12 @@ const Review: FC<PropTypes> = ({ data, isEditReview, position }) => {
             <Text>{displayDate(data.date)}</Text>
 
           </div>
-          {data.userId === user.id && <CloseOutlined className="text-red-400 text-xl" onClick={() => handleDelete(data.id)} />}
+          {+data.userId === user.id && <CloseOutlined className="text-red-400 text-xl" onClick={() => handleDelete(data.id)} />}
 
         </div>
 
         {isChangeEdit ? (<Form.Item name="rate"  >
-          <Rate allowHalf className="text-[20px] mt-1" />
+          <Rate allowHalf className="text-[20px] mt-1 " />
         </Form.Item>)
           :
           (<Rate allowHalf disabled defaultValue={data.rate} className="text-[20px] mt-1" />)
@@ -81,7 +81,7 @@ const Review: FC<PropTypes> = ({ data, isEditReview, position }) => {
 
           <div className="flex flex-col ">
 
-            <Text type="success" className="text-lg" strong>Плюсы</Text>
+            <Text type="success" className=" sm:text-lg " strong>Плюсы</Text>
             {isChangeEdit ? (<Form.Item name="plus"  >
               <TextArea />
             </Form.Item>)
@@ -91,7 +91,7 @@ const Review: FC<PropTypes> = ({ data, isEditReview, position }) => {
 
           </div>
           <div className="flex flex-col  pt-2">
-            <Text type="danger" className="text-lg" strong>Минусы</Text>
+            <Text type="danger" className="  sm:text-lg" strong>Минусы</Text>
             {isChangeEdit ? (<Form.Item name="minus"  >
               <TextArea />
             </Form.Item>)
@@ -101,12 +101,12 @@ const Review: FC<PropTypes> = ({ data, isEditReview, position }) => {
 
           </div>
           <div className="flex flex-col  pt-2">
-            <Text className="text-lg" strong>комментарий</Text>
+            <Text className=" sm:text-lg" strong>комментарий</Text>
             {isChangeEdit ? (<Form.Item name="comment"  >
               <TextArea />
             </Form.Item>)
               :
-              (<Text className="ml-2 max-w-md">{data.comment}</Text>)
+              (<Text className="ml-2 max-w-md ">{data.comment}</Text>)
             }
 
           </div>

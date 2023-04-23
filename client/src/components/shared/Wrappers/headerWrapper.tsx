@@ -1,48 +1,40 @@
 import { PropsWithChildren, useState, FC, memo, useEffect } from "react";
-import { Layout, Drawer, Input, Menu, Badge, Modal, Tabs } from 'antd';
-import type { MenuProps, TabsProps } from "antd"
+import { Layout, Drawer, Input, Menu, Badge, Modal, Tabs, Typography, AutoComplete } from 'antd';
+import type { TabsProps } from "antd"
 const { Search } = Input;
 const { Header, Footer, Content } = Layout;
 import {
   HeartOutlined, ShoppingCartOutlined,
-  UserOutlined, MenuOutlined, DatabaseOutlined,
-  GithubOutlined, MobileOutlined, LaptopOutlined
+  UserOutlined, MenuOutlined,
+  GithubOutlined
 } from '@ant-design/icons';
 import { Lobster } from "next/font/google";
 import Link from "next/link"
 import { useRouter } from 'next/router'
 import styles from "./headerWrapper.module.scss"
-import { useAppSelector } from "@hooks"
+import { useAppSelector, useActions } from "@hooks"
 import { LogIn, Register } from "@entities"
-import { useLazySearchQuery } from "@redux"
+import { useLazySearchQuery, useGetCategoriesQuery } from "@redux"
 import Head from "next/head";
 const lobster = Lobster({
   weight: ["400"],
   subsets: ['latin'],
 
 })
-type MenuItem = Required<MenuProps>['items'][number];
+
 type PropTypes = {
   title?: string
 }
 const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vito" }) => {
-  const getItem = (
-    label: React.ReactNode,
-    key?: React.Key | null,
-    icon?: React.ReactNode,
-    children?: MenuItem[],
-    type?: 'group',
-  ): MenuItem => {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    } as MenuItem;
-  }
+  const { cartItems } = useAppSelector(state => state.cart)
+  const { favoriteItems } = useAppSelector(state => state.favorite)
+  const { isAuth, user, } = useAppSelector(state => state.user)
+
+
   const [searchGoodsQuery] = useLazySearchQuery()
   const router = useRouter()
+  const [options, setOptions] = useState<{ value: string }[]>([]);
+
   const onSearch = (value: string) => {
     console.log(value)
     router.push({
@@ -52,46 +44,47 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
     searchGoodsQuery(value)
 
   }
+  const findItems = async (e) => {
+    const value = await searchGoodsQuery(e.target.value)
+    console.log(value)
+    setOptions(e.target.value ? value.data.map((elem) => ({ value: elem.name })) : []);
 
+  }
+  const { Text } = Typography
   const [open, setOpen] = useState(false)
   const handleClose = () => {
     setOpen((prev) => !prev)
   }
-  const onClick = (value: any) => {
 
-    router.push({
-      pathname: '/search/[message]',
-      query: { message: value.key }
-    })
-    searchGoodsQuery(value.key)
+  const onClick = async (value: any) => {
+
+
+
+
+    router.push(`/category/?categories=${value.keyPath[1]}&subcategories=${value.keyPath[0]}`);
+
     handleClose()
   }
   const handleOpen = () => {
     setOpen((prev) => !prev)
   }
-  const items: MenuItem[] = [
-    getItem('Смартфоны', 'sub1', <MobileOutlined />, [
-      getItem('', null, null, [getItem('Все смартфоны', 'Смартфон')], 'group'),
-      getItem('Samsung', null, null, [getItem('Смартфоны Samsung', 'Samsung')], 'group'),
-      getItem('Apple iphone', null, null, [getItem('Смартфоны Iphone', 'Iphone')], 'group'),
-      getItem('Xiaomi', null, null, [getItem('Смартфоны Xiaomi', 'Xiaomi')], 'group'),
-    ]),
-    getItem('Ноутбуки', 'sub2', <LaptopOutlined />, [
-      getItem('', null, null, [getItem('Все ноутбуки', 'Ноутбук')], 'group'),
-      getItem('Honor', null, null, [getItem('Ноутбуки Honor', 'Honor')], 'group'),
-      getItem('MSI', null, null, [getItem('Ноутбуки MSI', 'MSI')], 'group'),
-      getItem('Huawei', null, null, [getItem('Ноутбуки Huawei', 'Huawei')], 'group'),
-    ]),
-    getItem('Холодильники', 'sub3', <DatabaseOutlined />, [
-      getItem('', null, null, [getItem('Все холодильники', 'Холодильник')], 'group'),
-      getItem('Haier', null, null, [getItem('Холодильники Haier', 'Haier')], 'group'),
-      getItem('Candy', null, null, [getItem('Холодильники Candy', 'Candy')], 'group'),
+  const { data, isLoading } = useGetCategoriesQuery(null)
+  const items = []
 
-    ]),
-  ];
-  const { cartItems } = useAppSelector(state => state.cart)
-  const { favoriteItems } = useAppSelector(state => state.favorite)
-  const { isAuth, user } = useAppSelector(state => state.user)
+  if (!isLoading) {
+    for (let elem of data) {
+      const item = {
+        label: elem.name,
+        key: elem.tag,
+        children: [...elem.subcategories.map((subcategory => ({ label: subcategory[0], key: subcategory[1] })))],
+      }
+      items.push(item)
+    }
+  }
+
+
+
+
 
   const [domLoaded, setDomLoaded] = useState(false);
 
@@ -152,19 +145,27 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
             </Modal>
           )}
 
-          <Header className="bg-[#f4f4f4] flex items-center justify-center" >
-            <div className="container  flex justify-between">
-              <div className=" flex items-center gap-x-8">
-                <Link href="/"><h1 className={lobster.className + " text-3xl"} style={lobster.style}>Vito</h1></Link>
+          <header className="bg-[#f4f4f4] py-4  " >
+
+            <div className="  container-xl flex  justify-around ">
+
+              <div className=" flex gap-x-2 content-center md:gap-x-8 ">
+
+                <Link href="/"><h1 className={lobster.className + " hidden text-3xl md:inline-block"} style={lobster.style}>Vito</h1></Link>
                 <MenuOutlined onClick={handleOpen} className="basicHover text-2xl" />
-                <Drawer title="Каталог" placement="left" onClose={handleClose} open={open} className="max-w-[450px]">
-                  <Menu onClick={onClick} className='h-full w-full border-black ' mode="vertical" items={items} />
+                <Drawer title="Каталог" placement="left" onClose={handleClose} open={open} className="max-w-[450px]" >
+                  <Menu onClick={onClick} className='h-full w-full md:hidden' mode="horizontal" items={items} />
+                  <Menu onClick={onClick} className='h-full w-full hidden md:inline-block ' mode="vertical" items={items} />
+
+
                 </Drawer>
               </div>
-
-              <Search placeholder="Поиск..." onSearch={onSearch} size="middle" className="max-w-[400px] flex items-center" />
-
-              <nav className={styles.headerNav} >
+              <div className="flex items-center mt-1">
+                <AutoComplete className="w-[300px] md:w-[400px] " options={options} >
+                  <Input.Search placeholder="Поиск..." onSearch={onSearch} onChange={findItems} className="w-[300px] md:w-[400px]" />
+                </AutoComplete>
+              </div>
+              <nav className="hidden items-center gap-x-4 lg:flex" >
                 <Link href="/favorites">
                   <Badge count={favoriteItems.length} size="small" offset={[0, 7]}> <HeartOutlined className={styles.headerIco} /></Badge>
                 </Link>
@@ -172,15 +173,31 @@ const HeaderWrapper: FC<PropsWithChildren<PropTypes>> = ({ children, title = "Vi
                   <Badge count={cartItems.length} size="small" offset={[0, 7]}><ShoppingCartOutlined className={styles.headerIco} /></Badge>
                 </Link>
                 {isAuth ? <Link href={`/profile/${user.id}`}><UserOutlined className={styles.headerIco} /></Link> : <UserOutlined className={styles.headerIco} onClick={showModal} />}
+                {user.isAdmin && <Link href={`/admin`}><Text strong>админ панель</Text></Link>}
               </nav>
             </div>
-          </Header>
+
+          </header>
+
+          <nav className="w-full bg-[#f4f4f4] flex justify-center items-center gap-x-2 fixed bottom-0 z-30 py-4 lg:hidden ">
+            <Link href="/"><h1 className={lobster.className + "  text-2xl "} style={lobster.style}>Vito</h1></Link>
+
+            <div className="w-[100px] flex justify-between items-center">
 
 
-
+              <Link href="/favorites">
+                <Badge count={favoriteItems.length} size="small" offset={[0, 7]}> <HeartOutlined className={styles.headerIco} /></Badge>
+              </Link>
+              <Link href="/cart" >
+                <Badge count={cartItems.length} size="small" offset={[0, 7]}><ShoppingCartOutlined className={styles.headerIco} /></Badge>
+              </Link>
+              {isAuth ? <Link href={`/profile/${user.id}`}><UserOutlined className={styles.headerIco} /></Link> : <UserOutlined className={styles.headerIco} onClick={showModal} />}
+              {user.isAdmin && <Link href={`/admin`}><Text strong>админ панель</Text></Link>}
+            </div>
+          </nav>
           <Content className="bg-white content mb-40">
             <div className="flex justify-around">
-              <div className="container">
+              <div className="container  ">
 
                 {children}
               </div>

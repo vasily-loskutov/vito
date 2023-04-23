@@ -8,7 +8,7 @@ const CreateReview = () => {
     
     const {user} = useAppSelector(state=>state.user)
      const [createReviewMutation] = useCreateReviewMutation()
-    const onFinish = async(values: any) => {
+    const onFinish = async(values: any) => {  
      
               const review:IReview = {
                 comment:values.comment,
@@ -33,10 +33,10 @@ const CreateReview = () => {
         <Card className="bg-[#fcfcfcf1]">
             <Title level={2}>Написать комментарий</Title>
               <Form
-                      name="basic"
+                     name="basic"
                      autoComplete="off"
                      initialValues={{rate:2.5}}
-                     className="w-[600px]"
+                     className="max-w-[600px]"
 
                      onFinish={onFinish}
                      onFinishFailed={onFinishFailed}>
@@ -70,7 +70,7 @@ const CreateReview = () => {
                     </Form.Item>
                          
     <Form.Item >
-      <Button size="large" htmlType="submit">
+      <Button size="large" htmlType="submit" className="w-full">
         Создать 
       </Button>
     </Form.Item>

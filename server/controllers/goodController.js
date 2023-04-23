@@ -13,8 +13,17 @@ class GoodContoller {
   async getGoodById(req, res, next) {
     try {
       const { id } = req.params;
+
       const good = await goodService.getGood(id);
-      return res.send(good);
+
+      if (good === null) {
+
+        return res.status(404).json(null)
+      } else {
+
+        return res.send({ good });
+      }
+
     } catch (e) {
       next(e);
     }
@@ -22,7 +31,8 @@ class GoodContoller {
   async deleteGood(req, res, next) {
     try {
       const { id } = req.params;
-      const good = await goodService.getGood(id);
+
+      const good = await goodService.deleteGood(id);
       return res.send({ good });
     } catch (e) {
       next(e);
@@ -31,18 +41,33 @@ class GoodContoller {
   async createGood(req, res, next) {
     try {
       const payload = req.body;
-      const good = await goodService.createGood(payload);
+      const photos = req.files
+
+      const good = await goodService.createGood(payload, photos);
       return res.send({ good });
+    } catch (e) {
+      next(e);
+    }
+  }
+  async findGoodsByCategory(req, res, next) {
+    try {
+      const payload = req.body;
+      console.log("payload=========", payload)
+
+      const goods = await goodService.findGoodsByCategory(payload);
+      console.log(goods)
+      return res.send({ goods });
     } catch (e) {
       next(e);
     }
   }
   async updateGood(req, res, next) {
     try {
-      const { id } = req.params;
+
       const payload = req.body
-      console.log(payload)
-      const good = await goodService.updateGood(id, payload);
+      const photos = req.files
+      console.log("payload===", payload)
+      const good = await goodService.updateGood(payload, photos);
       return res.send({ good });
     } catch (e) {
       next(e);
@@ -63,6 +88,7 @@ class GoodContoller {
       const { message } = req.body;
       console.log(req.body)
       const findGoods = await goodService.search(message);
+      console.log(findGoods)
       return res.send({ findGoods });
     } catch (e) {
       next(e);

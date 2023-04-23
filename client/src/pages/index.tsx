@@ -21,7 +21,7 @@ export default function Home({ data }: PropsTypes) {
   const { Title } = Typography
   const { checkAuth } = useActions()
   const popularGoods = _.orderBy(data, ['rate'], ['desc'])
-
+  console.log(data)
   useEffect(() => {
 
     if (isLoading && refreshData) {
@@ -32,10 +32,10 @@ export default function Home({ data }: PropsTypes) {
   return (
     <>
       <HeaderWrapper >
-        <div className='flex flex-col justify-center'>
+        <div className='flex flex-col justify-center items-center'>
           <Title className='text-center' level={1}>Популярные товары</Title>
 
-          <div className='mt-5 flex gap-8 flex-wrap'>
+          <div className='mt-5 grid grid-cols-1  row-auto gap-y-4 gap-x-7  lg:grid-cols-3 sm:grid-cols-2'>
 
             {popularGoods.slice(0, 8).map(good => <Good good={good} key={good.id} />)}
           </div>

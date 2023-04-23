@@ -31,13 +31,19 @@ const FavoriteItem: FC<PropTypes> = ({ data }) => {
 
     return (
         <div className={styles.favItemContainer}>
-            <CarouselGood data={data.photo} size={{ width: 160, height: 160 }} />
+
+            <div className="hidden md:inline-block">
+                <CarouselGood data={data.photo} size={{ width: 160, height: 160 }} />
+            </div>
+            <div className=" md:hidden">
+                <CarouselGood data={data.photo} size={{ width: 100, height: 100 }} />
+            </div>
             <div>
                 <Link href={`/${data.linkToGood}`}><Title level={3} className="max-w-[400px]">{data.name}</Title></Link>
                 <Button danger type="dashed" onClick={() => handleDelete(data.name)}>Удалить из избранного</Button>
             </div>
             <div>
-                <Title level={4}>{data.price} ₽</Title>
+                <Title level={4} >{data.price} ₽</Title>
                 {cartItems.findIndex((f) => f.name === data.name) === -1 ? (<Button onClick={handleClick}>В корзину</Button>)
                     : <Button onClick={() => deleteInCart(data.name)}>В корзинe</Button>}
             </div>

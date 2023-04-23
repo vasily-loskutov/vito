@@ -8,9 +8,9 @@ import type { IRegisterPayload } from "./registerPayload";
 import type { IError, IErrorData } from "./error";
 import type { IStoryGoodItem } from "./storyGoodItem"
 import type { IReview } from "./review";
-
+import type { ICategory,ICategoryResponse } from "./categories";
 export {
     IGood, RootObject, ICartItem, IFavoriteItem,
     IUser, IAuthResponse, ILogInPayload, IRegisterPayload,
-    IError, IErrorData, IUserInfo, IStoryGoodItem, IReview
+    IError, IErrorData, IUserInfo, IStoryGoodItem, IReview, ICategory,ICategoryResponse
 }

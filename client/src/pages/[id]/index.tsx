@@ -1,6 +1,6 @@
 import { ICartItem, IGood, IReview } from '@models';
-import { FC } from 'react';
-
+import { FC, useEffect } from 'react';
+import NotFoundPage from "../404"
 import { HeaderWrapper, CarouselGood, NextArrow, PrevArrow } from '@shared'
 import { wrapper, goodsApi, reviewApi, useGetUserReviewQuery, useGetStoryGoodsQuery } from '@redux'
 import { Rate, Button, Typography, Carousel, message } from 'antd';
@@ -11,11 +11,17 @@ import { CreateReview, Review } from '@entities';
 import { useActions, useAppSelector } from '@hooks';
 type PropTypes = {
   data: IGood,
-  reviews: IReview[]
+  reviews: IReview[],
+  status: number
 }
 
-const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
+const FullGoodPage: FC<PropTypes> = ({ status, data, reviews }) => {
+
   const router = useRouter()
+  if (status == 404) {
+    return <NotFoundPage />
+  }
+
 
   const { Title, Text } = Typography
   const goBack = () => {
@@ -49,8 +55,8 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
     <>
       <HeaderWrapper title={data.name}>
         {contextHolder}
-        <div className="mt-10 border border-slate-200 flex items-center">
-          <div className="flex gap-x-7 p-10">
+        <div className="mt-10 border border-slate-200 flex items-center justify-center md:justify-start ">
+          <div className="flex gap-x-7 p-10 flex-col md:flex-row">
             <CarouselGood data={data.photo} size={{ width: 250, height: 250 }} />
             <div className="flex flex-col">
               <Rate disabled allowHalf defaultValue={data.rate} className="text-3xl mb-4" />
@@ -71,19 +77,25 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
           <Title>Комментарии:</Title>
           {isAuth && isВought === -1 && isPurchasedGoods !== -1 && < CreateReview />}
           {reviews.length >= 1 ?
-            <div className='relative'>
+          <>
+            <div className='relative hidden md:inline mt-2'>
 
               <Carousel
-                className='flex gap-x-6 mt-2 max-w-[1700px] ' dots={false} infinite={false}
+                className='flex gap-x-6  max-w-[1700px]' dots={false} infinite={false}
                 slidesToShow={3} slidesToScroll={2}
 
                 arrows prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
                 {reviews.slice(0, 6).map((review) => (<Review data={review} isEditReview={false} key={review.id} />))
                 }
               </Carousel>
-              {reviews.length >= 5 && (<Link href={`/${data.id}/reviews`}><Button className="w-full mt-5 pb-20" size="large" >Смотреть все комментарии </Button></Link>)}
-
+             
             </div>
+            <div className="flex flex-col gap-y-5 md:hidden mt-2">
+            {reviews.slice(0, 6).map((review) => (<Review data={review} isEditReview={false} key={review.id} />))
+                }
+            </div>
+            {reviews.length >= 5 && (<Link href={`/${data.id}/reviews`}><Button className="w-full mt-5 pb-20" size="large" >Смотреть все комментарии </Button></Link>)}
+              </>
             : <Title>Комментариев под данным товаром пока что нет!</Title>}
         </div>
       </HeaderWrapper >
@@ -92,10 +104,16 @@ const FullGoodPage: FC<PropTypes> = ({ data, reviews }) => {
 
 export default FullGoodPage;
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
-  const { data } = await store.dispatch(goodsApi.endpoints.getGood.initiate(context.params.id[0]))
-  console.log(data)
 
-  const { data: reviews } = await store.dispatch(reviewApi.endpoints.getReview.initiate(context.params.id[0]))
+  const { data, error } = await store.dispatch(goodsApi.endpoints.getGood.initiate(context.params.id))
 
-  return { props: { data, reviews } }
+  const { data: reviews } = await store.dispatch(reviewApi.endpoints.getReview.initiate(context.params.id))
+  console.log(error)
+
+  if (error?.status === 404) {
+    const { status, data } = error;
+
+    return { props: { status, data, reviews } }
+  }
+  return { props: { status: 200, data, reviews } }
 })
